@@ -29,3 +29,13 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+// 等价于下面三个路由
+// Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit']]);
+
+// 显示用户个人信息页面
+Route::get('users/{user}', 'UsersController@show')->name('users.show');
+// 显示编辑个人资料页面
+Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
+// 处理 edit 页面提交的更改
+Route::patch('users/{user}', 'UsersController@update')->name('users.update');
