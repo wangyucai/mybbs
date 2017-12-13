@@ -26,10 +26,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     // 一个用户拥有多个话题
     public function topics()
     {
         return $this->hasMany(Topic::class);
+    }
+
+
+    // 在策略里避免代码的重复性
+    public function isAuthorOf($model)
+    {
+        return $this->id == $model->user_id;
     }
 }

@@ -68,6 +68,7 @@ class TopicsController extends Controller
 
 	public function destroy(Topic $topic)
 	{
+    
 		$this->authorize('destroy', $topic);
 		$topic->delete();
 
