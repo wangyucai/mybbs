@@ -28,8 +28,13 @@ class TopicsController extends Controller
 		return view('topics.index', compact('topics'));
 	}
 
-    public function show(Topic $topic)
+    public function show(Request $request, Topic $topic)
     {
+        // URL 矫正
+        // 当话题有 Slug 的时候，我们希望用户一直使用正确的、带着 Slug 的链接来访问。我们可以在控制器中对 Slug 进行判断，当条件允许的时候，我们将发送 301 永久重定向指令给浏览器，跳转到带 Slug 的链接：
+        if ( ! empty($topic->slug) && $topic->slug != $request->slug) {
+            return redirect($topic->link(), 301);
+        }
         return view('topics.show', compact('topic'));
     }
 
@@ -48,7 +53,8 @@ class TopicsController extends Controller
     $topic->user_id = Auth::id();
     // 保存到数据库中
 		$topic->save();
-    return redirect()->route('topics.show', $topic->id)->with('success', '成功创建主题！');
+    // return redirect()->route('topics.show', $topic->id)->with('success', '成功创建主题！');
+    return redirect()->to($topic->link())->with('success', '成功创建话题！');
 	}
 
 	public function edit(Topic $topic)
@@ -63,12 +69,13 @@ class TopicsController extends Controller
 		$this->authorize('update', $topic);
 		$topic->update($request->all());
 
-		return redirect()->route('topics.show', $topic->id)->with('success', '更新成功！');
+		// return redirect()->route('topics.show', $topic->id)->with('success', '更新成功！');
+		return redirect()->to($topic->link())->with('success', '更新成功！');
 	}
 
 	public function destroy(Topic $topic)
 	{
-    
+
 		$this->authorize('destroy', $topic);
 		$topic->delete();
 
