@@ -1,7 +1,7 @@
 ## 项目简介
 #### mybbs 是一款基于 Laravel 5.5 框架开发的开类似Laravel China 社区的网站，你可以将其作为项目原型快速开始业务迭代开发。
 ## 代码仓库
-####Github：https://github.com/wangyucai/mybbs
+#### Github：https://github.com/wangyucai/mybbs
 ## 安装步骤
 #### 克隆资源库：git clone https://github.com/wangyucai/mybbs.git ./
 #### 安装依赖关系：composer install
